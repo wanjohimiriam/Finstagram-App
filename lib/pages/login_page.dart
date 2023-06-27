@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element, prefer_const_constructors
+// ignore_for_file: unused_element, prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 
@@ -75,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             _emailTextForm(),
+            _psswordTextForm(),
           ],
         )
         ),
@@ -90,9 +91,24 @@ class _LoginPageState extends State<LoginPage> {
         });
       },
       validator: (_value){
-        _value.contains.(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"));
+        bool result = _value!.contains(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"));
 
+        result ? null : "Please Enter a Valid email";
       },
     );
+  }
+
+  Widget _psswordTextForm(){
+    return TextFormField(
+      decoration: InputDecoration(
+        hintText: "Password",
+      ),onSaved: (value) {
+        setState(() {
+          password= value;
+        });
+      },
+      validator: (_value) =>
+      _value!.length > 6 ? null : "Please enter a password greater than 6 characters"
+      );
   }
 }
